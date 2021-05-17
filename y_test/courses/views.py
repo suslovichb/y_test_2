@@ -1,13 +1,11 @@
-from rest_framework import generics
+from rest_framework import viewsets
 from .serializers import CourseSerializer
 from .models import Course
+from django_filters.rest_framework import DjangoFilterBackend
 
 
-class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = CourseSerializer
+class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
-
-
-class CourseListCreateView(generics.ListCreateAPIView):
     serializer_class = CourseSerializer
-    queryset = Course.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = '__all__'
